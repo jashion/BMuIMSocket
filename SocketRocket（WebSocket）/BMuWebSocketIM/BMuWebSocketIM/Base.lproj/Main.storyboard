@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8tV-eZ-wfS">
+                                <rect key="frame" x="16" y="59" width="272" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="272" id="yIe-eR-gg0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ELJ-pa-pYD">
+                                <rect key="frame" x="315.66666666666669" y="59" width="61.333333333333314" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="send"/>
+                                <connections>
+                                    <action selector="send:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fBb-hA-Uc8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9of-Pv-WNF">
+                                <rect key="frame" x="16" y="114" width="86" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="connect"/>
+                                <connections>
+                                    <action selector="socketConnect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PBL-9n-QdD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ut3-tV-4We">
+                                <rect key="frame" x="125" y="114" width="109" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="disconnect"/>
+                                <connections>
+                                    <action selector="socketDisconnect:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mOC-mr-ioW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ut3-tV-4We" firstAttribute="leading" secondItem="9of-Pv-WNF" secondAttribute="trailing" constant="23" id="11v-p0-62X"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8tV-eZ-wfS" secondAttribute="trailing" constant="105" id="8uA-NL-Bv8"/>
+                            <constraint firstItem="9of-Pv-WNF" firstAttribute="baseline" secondItem="ut3-tV-4We" secondAttribute="baseline" id="K8o-jf-1UG"/>
+                            <constraint firstItem="ELJ-pa-pYD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8tV-eZ-wfS" secondAttribute="trailing" constant="8" symbolic="YES" id="Kf0-Uz-ANW"/>
+                            <constraint firstItem="8tV-eZ-wfS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="QPW-9u-rmd"/>
+                            <constraint firstItem="ELJ-pa-pYD" firstAttribute="centerY" secondItem="8tV-eZ-wfS" secondAttribute="centerY" id="Sgc-7D-BVR"/>
+                            <constraint firstItem="ELJ-pa-pYD" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Uvg-rq-5bg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ut3-tV-4We" secondAttribute="trailing" symbolic="YES" id="Xrd-W8-Vrl"/>
+                            <constraint firstItem="9of-Pv-WNF" firstAttribute="top" secondItem="8tV-eZ-wfS" secondAttribute="bottom" constant="20" id="am6-fP-tL5"/>
+                            <constraint firstItem="9of-Pv-WNF" firstAttribute="leading" secondItem="8tV-eZ-wfS" secondAttribute="leading" id="fet-rd-iUv"/>
+                            <constraint firstItem="8tV-eZ-wfS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="fh3-K4-D06"/>
+                            <constraint firstItem="ELJ-pa-pYD" firstAttribute="top" secondItem="8tV-eZ-wfS" secondAttribute="top" id="q3J-sL-GOI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textField" destination="8tV-eZ-wfS" id="AEk-Nh-LBh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="130.53435114503816" y="-27.464788732394368"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
