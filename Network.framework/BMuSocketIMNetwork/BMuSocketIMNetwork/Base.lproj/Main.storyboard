@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="BMuSocketIMNetwork" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fbl-m6-g84">
+                                <rect key="frame" x="16" y="58" width="276" height="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O47-et-ofv">
+                                <rect key="frame" x="16" y="101" width="86" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="connect"/>
+                                <connections>
+                                    <action selector="connectAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DfB-c0-lxs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ddX-SP-dqk">
+                                <rect key="frame" x="122" y="101" width="109" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="disconnect"/>
+                                <connections>
+                                    <action selector="disconnectAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fHF-Qw-cGv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oos-A9-8vQ">
+                                <rect key="frame" x="315" y="58" width="62" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="send"/>
+                                <connections>
+                                    <action selector="sendAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IIO-lS-hOr"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oos-A9-8vQ" secondAttribute="bottom" constant="725" id="ASf-Pb-oSZ"/>
+                            <constraint firstItem="oos-A9-8vQ" firstAttribute="bottom" secondItem="Fbl-m6-g84" secondAttribute="bottom" id="Idw-s7-Eq7"/>
+                            <constraint firstItem="oos-A9-8vQ" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="KO6-GZ-413"/>
+                            <constraint firstItem="O47-et-ofv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="MsC-R6-6Kx"/>
+                            <constraint firstItem="O47-et-ofv" firstAttribute="baseline" secondItem="ddX-SP-dqk" secondAttribute="baseline" id="Oie-LP-mFG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ddX-SP-dqk" secondAttribute="trailing" symbolic="YES" id="Xyw-8u-a1Y"/>
+                            <constraint firstItem="Fbl-m6-g84" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="dbx-Zh-yad"/>
+                            <constraint firstItem="O47-et-ofv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="42" id="h65-1B-0Ut"/>
+                            <constraint firstItem="oos-A9-8vQ" firstAttribute="leading" secondItem="Fbl-m6-g84" secondAttribute="trailing" constant="23" id="jg7-CJ-Qh1"/>
+                            <constraint firstItem="oos-A9-8vQ" firstAttribute="centerY" secondItem="Fbl-m6-g84" secondAttribute="centerY" id="vYr-0z-9DQ"/>
+                            <constraint firstItem="ddX-SP-dqk" firstAttribute="leading" secondItem="O47-et-ofv" secondAttribute="trailing" constant="20" id="w0L-vq-rjc"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textField" destination="Fbl-m6-g84" id="Cwe-Bj-VAQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="130.53435114503816" y="-27.464788732394368"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

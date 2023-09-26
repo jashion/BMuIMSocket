@@ -370,6 +370,217 @@ wss.on('connection', function (ws) {
 console.log('开始监听10069端口');
 ```
 
+#### Demo6:
+
+This demo is using Network.framework to implement.
+
+###### Client:
+
+Create connection.
+
+```swift
+let paramters = NWParameters.tcp //使用tcp协议
+paramters.prohibitedInterfaceTypes = [.wifi, .cellular]
+        //使用ipv6
+//        if let option = paramters.defaultProtocolStack.internetProtocol as? NWProtocolIP.Options {
+//            option.version = .v6
+//        }
+//不使用代理
+paramters.preferNoProxies = true
+
+let connection = NWConnection(host: NWEndpoint.Host("127.0.0.1"), port: NWEndpoint.Port(integerLiteral: 10069), using: paramters)
+```
+
+Connect to server.
+
+```swift
+connection?.stateUpdateHandler = {[weak self] (newState) in
+switch(newState) {
+case .setup:
+    print("connection is setup.\n")
+case .preparing:
+    print("connection is preparing.\n")
+case .ready:
+    print("connection established.\n")
+case .cancelled:
+    print("cancel connection.\n")
+    self?.disconnect()
+case .waiting(let error):
+    //Handle connection waiting for network.
+    print("waiting error: \(error).\n")
+case .failed(let error):
+    //Handle fatal connection error
+    print("fail error: \(error).\n")
+    self?.disconnect()
+default:
+    break
+    }
+}
+//call receive function before connection 
+receive()
+connection?.start(queue: DispatchQueue.main)
+```
+
+Send message to server.
+
+```swift
+connection?.send(content: message.data(using: .utf8), completion: .contentProcessed({ error in
+    if let error = error {
+        print("send message error: \(error).\n")
+    } else {
+        print("send message success.\n")
+    }
+}))
+```
+
+Receive message from server.
+
+```swift
+//receive called before connect
+//and only call once
+connection?.receive(minimumIncompleteLength: 1, maximumLength: 8096, completion: {[weak self] content, contentContext, isComplete, error in
+    if let error = error {
+        print(error)
+        return
+    }
+
+    if let data = content, !data.isEmpty {
+        print(String(data: data, encoding: .utf8)!)
+    }
+
+    //完成
+    if isComplete {
+        print("read finish.\n")
+        return
+    }
+
+    //call receive function again   
+    self?.receive()
+})
+//This function will be called after server is closed.
+//connection?.receiveMessage(completion: {[weak self] completeContent, contentContext, isComplete, error in
+//})
+```
+
+###### Server:
+
+The server using NWListener to bind and listen the socket from client.
+
+Create listener.
+
+```swift
+let listener = try! NWListener(using: .tcp, on: NWEndpoint.Port(integerLiteral: 10069))
+```
+
+Bind and listen to the client link.
+
+```swift
+listener?.stateUpdateHandler = {(newState) in
+    switch newState {
+        case .ready:
+            print("Server ready.\n")
+        case .failed(let error):
+            print("Server failure, error: \(error.localizedDescription)\n")
+            exit(EXIT_FAILURE)
+        default:
+            break
+    }
+}
+
+listener?.newConnectionHandler = {[weak self] (connection) in
+    self?.connection = connection
+    connection.stateUpdateHandler = {(newState) in
+    switch(newState) {
+        case .waiting(let error):
+            print("Connection failure, error: \(error.localizedDescription)\n")
+        case .ready:
+            print("Connection ready.\n")
+        case .failed(let error):
+            print("Connection failure, error: \(error.localizedDescription)\n")
+            exit(EXIT_FAILURE)
+        default:
+            break
+        }
+    }
+
+    self?.receive()
+    connection.start(queue: .main)
+//            connection.send(content: "welcome to server".data(using: .utf8), completion: .contentProcessed({ error in
+//                if let error = error {
+//                    print("error : \(error.localizedDescription)")
+//                    return
+//                }
+//                print("send sucess.")
+//            }))
+}
+
+listener?.start(queue: .main)
+```
+
+Send message to server.
+
+```swift
+connection?.send(content: message.data(using: .utf8), completion: .contentProcessed({ error in
+    if let error = error {
+        print("error : \(error.localizedDescription)")
+        return
+    }
+print("send sucess, message: \(message)")
+}))
+```
+
+Receive message from server.
+
+```swift
+func receive() {
+    connection?.receive(minimumIncompleteLength: 1, maximumLength: 8096) {[weak self] data, _, isComplete, error in
+        if let data = data, !data.isEmpty {
+        let message = String(data: data, encoding: .utf8)
+        print("connection did receive, data \(message ?? "")")
+        self?.connection?.send(content: data, completion: .contentProcessed({ error in
+            if let error = error {
+                print("error : \(error.localizedDescription)")
+                return
+            }
+            print("send data: \(data)")
+        }))
+        }
+
+        if let error = error {
+            print("error : \(error.localizedDescription)")
+            return
+        }
+
+        if isComplete {
+            return
+        }
+        self?.receive()
+    }
+}
+```
+
 #### Summary:
 
 We can use newer libraries to implement socket communicate.CocoaAsyncSocket and SocketRocket are no longer maintain.We can use Socket.io or Network.framwork to implemet socket communicate.At last, we also can use Easemob to implement our IM project at first.
+
+#### refrecences:
+
+[iOS即时通讯，从入门到“放弃”？ - 简书](https://www.jianshu.com/p/2dbb360886a8)
+
+[iOS 用原生代码写一个简单的socket连接 - 掘金](https://juejin.cn/post/6844903940459331598#heading-12)
+
+[玩转iOS开发：iOS中的Socket编程(三) - 掘金](https://juejin.cn/post/6844903485968744462)
+
+[移动端IM实践：实现Android版微信的智能心跳机制](http://www.52im.net/thread-120-1-1.html)
+
+[一看就懂的socket通讯原理及例程](https://zhuanlan.zhihu.com/p/525974052)
+
+[WWDC 2018：Network.framework 入门，现代化 Socket 编程的新选择 - 掘金](https://juejin.cn/post/6844903618567471118)
+
+[iOS开发之Network框架开发Socket实践](https://www.jianshu.com/p/96cef6262144)
+
+[对长期运行TCP套接字使用NWConnection的正确方法-腾讯云开发者社区-腾讯云](https://cloud.tencent.com/developer/ask/sof/115735034)
+
+[Apple’s TCP sample code | Apple Developer Forums](https://developer.apple.com/forums/thread/116723)
+
+[Building a server-client application using Apple's Network Framework](https://rderik.com/blog/building-a-server-client-aplication-using-apple-s-network-framework/)
